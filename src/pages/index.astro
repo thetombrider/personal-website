@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content'
+
+const title = 'Tommaso Minuto — Product builder'
+const description = 'Tommaso Minuto — product builder working at the intersection of business, AI, and software.'
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5f4ef" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="wordmark" href="#top" aria-label="Tommaso Minuto home"><span>TM</span><b>Tommaso Minuto</b></a>
+        <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu <span>↗</span></button>
+        <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+          <a href="#work">Projects</a>
+          <a href="#writing">Writing</a>
+          <a href="#about">About</a>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button><a class="nav-contact" href="https://www.linkedin.com/in/tommaso-minuto/" target="_blank" rel="noreferrer">Get in touch <span>↗</span></a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero section-pad">
+          <div class="eyebrow reveal"><span class="eyebrow-dot"></span> Product builder · Milan / Italy</div>
+          <h1 class="hero-title reveal">I turn messy<br /><em>problems</em> into<br /><span class="outline-text">useful products.</span></h1>
+          <div class="hero-bottom reveal">
+            <div class="hero-intro"><p>I’m Tommaso — a business-minded builder working where <strong>AI, software, and real operations</strong> meet.</p><dl class="status-list"><div><dt>Currently</dt><dd>AI Enablement @ Satispay</dd></div><div><dt>Based in</dt><dd>Milan, Italy</dd></div><div><dt>Status</dt><dd><i></i> Building</dd></div></dl></div>
+            <a class="circle-link" href="#work" aria-label="Scroll to selected work"><span>See<br />the work</span><b>↓</b></a>
+          </div>
+          <div class="hero-stamp" aria-hidden="true">BUILD<br />WITH<br />INTENT</div>
+        </section>
+
+        <section id="work" class="work section-pad">
+          <div class="section-heading reveal"><span class="section-number">01 /</span><h2>Selected work</h2><p>Things I’ve built to understand a problem<br />by getting close to it.</p></div>
+          {projects.map((project, index) => <article class="project-card reveal">
+            <div class={`project-visual ${project.data.visual}-visual`}>
+              {project.data.visual === 'ridge' ? <div class="ridge-window">
+                <div class="window-top"><span class="window-logo">ridge<span>·</span></span><span class="window-dots">•••</span></div>
+                <div class="window-body"><div class="window-greeting">Good morning, Tommaso</div><div class="window-balance">€ 24,860 <small>+8.4%</small></div><div class="window-label">NET WORTH <span>THIS YEAR ↗</span></div><div class="chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="window-stats"><span>Income <b>€ 3,240</b></span><span>Expenses <b>€ 1,890</b></span></div></div>
+              </div> : <div class="orin-window">
+                <div class="orin-top"><span>● orin</span><span>offline demo</span></div>
+                <div class="orin-prompt"><span class="prompt-symbol">›</span><span>fix the failing test in src/foo</span></div>
+                <div class="orin-log"><p><b>read</b> src/foo.test.ts</p><p><b>search</b> related symbols</p><p><b>plan</b> 2 changes found</p><p class="approval"><span>?</span> approve file write <strong>[y/N]</strong></p></div>
+                <div class="orin-status"><span>●</span> waiting for approval <span>v0.1.0</span></div>
+              </div>}
+              <span class="visual-caption">{project.data.visualCaption}</span>
+            </div>
+            <div class="project-copy"><div class="project-meta"><span>{String(index + 1).padStart(2, '0')}</span><span>{project.data.eyebrow} · {project.data.period}</span></div><h3>{project.data.title}<br /><em>{project.data.titleAccent}</em></h3><p>{project.data.description}</p><div class="project-tags">{project.data.tags.map((tag) => <span>{tag}</span>)}</div><a class="text-link" href={project.data.url} target="_blank" rel="noreferrer">Explore {project.data.title} {project.data.titleAccent} <span>↗</span></a></div>
+          </article>)}
+          <div class="work-note reveal"><span class="note-mark">↳</span><p>It started as a product experiment. It became a lesson in trust: when the product handles someone’s financial life, “just put it on the web” is not a good enough answer.</p></div>
+        </section>
+
+        <section id="writing" class="writing section-pad"><div class="section-heading reveal"><span class="section-number">02 /</span><h2>Build notes</h2><p>Writing about products, AI,<br />and the work behind them.</p></div><div class="writing-card reveal"><div><span class="writing-label">COMING SOON</span><h3>Notes from<br /><em>the workshop.</em></h3></div><p>I’m collecting the useful bits: what I’m learning while building with AI, where automation helps, and what breaks when a product meets the real world.</p><a class="text-link" href="https://www.linkedin.com/in/tommaso-minuto/" target="_blank" rel="noreferrer">Follow along on LinkedIn <span>↗</span></a></div></section>
+
+        <section id="about" class="about section-pad">
+          <div class="section-heading reveal"><span class="section-number">03 /</span><h2>A little context</h2><p>The short version of how I work<br />and what I care about.</p></div>
+          <div class="about-grid"><div class="about-lead reveal"><p>I’m not an engineer by training. I studied <em>business</em>. That’s precisely why I like building: I start with the user, the constraint, and the outcome — then find the fastest path to something people can use.</p></div><div class="about-body reveal"><p>Today, I’m an <strong>AI Enablement Specialist at Satispay</strong>, where I work on applied AI projects, internal tools, and automations that make business processes less manual.</p><p>Sometimes AI is the tool I use to ship conventional software. Sometimes it is the feature. The question is always the same: <em>does it make the work meaningfully better?</em></p><div class="principles"><div><span>01</span><b>Start with the real problem</b></div><div><span>02</span><b>Make the first version tangible</b></div><div><span>03</span><b>Keep trust in the product</b></div></div></div></div>
+        </section>
+
+        <section class="now section-pad"><div class="now-inner reveal"><div><span class="section-number">04 / CONTACT</span><h2>Have a problem<br /><em>worth building around?</em></h2></div><div class="now-copy"><p class="closing-caption">Building at the speed of curiosity.</p><a class="text-link light-link" href="https://www.linkedin.com/in/tommaso-minuto/" target="_blank" rel="noreferrer">Get in touch on LinkedIn <span>↗</span></a></div></div></section>
+      </main>
+      <footer class="site-footer"><span>© <span id="year"></span> Tommaso Minuto</span><span>Built with curiosity &amp; AI</span><a href="#top">Back to top ↑</a></footer>
+    </div>
+    <script src="/script.js" is:inline></script>
+  </body>
+</html>
